@@ -9,6 +9,7 @@ import { muscles, exercises } from "./store";
 export default class extends Component {
   state = {
     exercises,
+    muscles,
     category: "",
     exercise: {
       title: "Welcome",
@@ -22,6 +23,12 @@ export default class extends Component {
 
   handleExerciseSelected = exercise => {
     this.setState({ exercise });
+  };
+
+  handleExerciseCreate = exercise => {
+    this.setState((prevState, props) => ({
+      exercises: prevState.exercises.concat(exercise)
+    }));
   };
 
   getExercisesByMuscles = () => {
@@ -39,7 +46,10 @@ export default class extends Component {
   render() {
     return (
       <>
-        <Header />
+        <Header
+          categories={this.state.muscles}
+          handleCreate={this.handleExerciseCreate}
+        />
         <Exercises
           category={this.state.category}
           exercise={this.state.exercise}
